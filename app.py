@@ -25,8 +25,7 @@ login_manager.init_app(app)
 
 
 # データベース（情報を保存するもの）と接続するための設定
-database_url = os.environ.get('DATABASE_URL')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
 
 # 安全性のため、演算が極めて遅いbcryptでパスワードをハッシュ化した状態で保存する
