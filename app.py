@@ -12,7 +12,7 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, cur
 from bcrypt import checkpw, gensalt, hashpw
 import flask_login
 from urllib.parse import unquote, urlparse
-app = Flask(__name__)445
+app = Flask(__name__)
 from secrets import token_hex
 import requests
 import psycopg2
