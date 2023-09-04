@@ -25,7 +25,8 @@ login_manager.init_app(app)
 
 
 # データベース（情報を保存するもの）と接続するための設定
-app.config['SQLALCHEMY_DATABASE_URI'] = db_uri = os.environ.get('DATABASE_URL') or "postgresql://localhost/flaskbbs"
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri = os.environ.get('DATABASE_URL').replace('postgres://', 'postgresql+psycopg2://') or "postgresql+psycopg2://localhost/flaskbbs"
+
 
 db = SQLAlchemy(app)
 
