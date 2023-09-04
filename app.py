@@ -12,7 +12,7 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, cur
 from bcrypt import checkpw, gensalt, hashpw
 import flask_login
 from urllib.parse import unquote, urlparse
-app = Flask(__name__)
+app = Flask(__name__)445
 from secrets import token_hex
 import requests
 import psycopg2
@@ -205,7 +205,7 @@ def login():
             if user is None:
                 flash('ユーザー名が見つけられません')
             else:
-                if checkpw(bytes(password.encode('utf-8')), bytes(user.hashed_pw.encode('utf-8'))):
+                if checkpw(bytes(password.encode('utf-8')), user.hashed_pw.encode.decode('utf-8')):
                     login_user(user, remember=True)
                     session['username'] = username
                     session['icon'] = user.icon
