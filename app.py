@@ -46,7 +46,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(), unique=True)
-    hashed_pw = db.Column(db.String(128), nullable=False)
+    hashed_pw = db.Column(db.LargeBinary(128), nullable=False) # LargeBinary型に変更
     icon = db.Column(db.String(), nullable=True, default='https://via.placeholder.com/40x40')
 
 
@@ -169,7 +169,7 @@ def signup():
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
-            hashed_pw = hashpw(bytes(password.encode('utf-8')), salt=salt)# type: ignore
+            hashed_pw = hashpw(bytes(password.encode('utf-8')), salt=salt)
 
             if User.query.filter(User.username==username).count()==0:
 
@@ -205,7 +205,8 @@ def login():
             if user is None:
                 flash('ユーザー名が見つけられません')
             else:
-                if checkpw(bytes(password.encode('utf-8')), user.hashed_pw.encode.decode('utf-8')):
+
+                if checkpw(bytes(password.encode('utf-8')), user.hashed_pw):
                     login_user(user, remember=True)
                     session['username'] = username
                     session['icon'] = user.icon
