@@ -208,11 +208,12 @@ def login():
 
                 if checkpw(bytes(password.encode('utf-8')), user.hashed_pw):
                     login_user(user, remember=True)
+                    print('logined as '+username)
                     session['username'] = username
                     session['icon'] = user.icon
                     
                     flash('「'+username+'」としてログインしました！')
-                    next_page = request.args.get('next')
+                    next_page = '/home'
                     return redirect(next_page or url_for('enter'))
     return render_template('login.html')
 
