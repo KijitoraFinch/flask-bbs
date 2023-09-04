@@ -19,7 +19,7 @@ import psycopg2
 from flaskext.markdown import Markdown
 # ログイン周りの設定
 # ランダムにキーを自動生成
-app.config['SECRET_KEY'] = token_hex(16)
+app.config['SECRET_KEY'] = token_hex()
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -205,7 +205,7 @@ def login():
             if user is None:
                 flash('ユーザー名が見つけられません')
             else:
-                if checkpw(bytes(password.encode('utf-8')), bytes(user.hashed_pw.encode('utf-8')))):
+                if checkpw(bytes(password.encode('utf-8')), user.hashed_pw):
                     login_user(user, remember=True)
                     session['username'] = username
                     session['icon'] = user.icon
@@ -251,7 +251,7 @@ def is_valid_url(url):
 @app.route('/logout')
 @login_required
 def logout():
-    flask_login.logout.user()
+    flask_login.logout_user()
     return render_template('logout.html')
 
 
