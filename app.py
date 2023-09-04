@@ -19,7 +19,9 @@ import psycopg2
 from flaskext.markdown import Markdown
 # ログイン周りの設定
 # ランダムにキーを自動生成
-app.config['SECRET_KEY'] = token_hex(16)
+app.config['SECRET_KEY'] =  os.environ.get('SECRET_KEY')
+
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
