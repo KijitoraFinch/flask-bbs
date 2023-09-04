@@ -25,7 +25,8 @@ login_manager.init_app(app)
 
 
 # データベース（情報を保存するもの）と接続するための設定
-app.config['SQLALCHEMY_DATABASE_URI'] = db_uri = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri = os.environ.get('DATABASE_URL') or "postgresql://localhost/flaskbbs"
+
 db = SQLAlchemy(app)
 
 # 安全性のため、演算が極めて遅いbcryptでパスワードをハッシュ化した状態で保存する
@@ -256,3 +257,5 @@ def logout():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+
+    app.run(debug=True)
