@@ -205,8 +205,7 @@ def login():
             if user is None:
                 flash('ユーザー名が見つけられません')
             else:
-                if checkpw(password.encode('utf-8'), user.hashed_pw.encode('utf-8')):
-
+                if checkpw(bytes(password.encode('utf-8')), user.hashed_pw):
                     login_user(user, remember=True)
                     session['username'] = username
                     session['icon'] = user.icon
