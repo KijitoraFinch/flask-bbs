@@ -19,7 +19,7 @@ import psycopg2
 from flaskext.markdown import Markdown
 # ログイン周りの設定
 # ランダムにキーを自動生成
-app.config['SECRET_KEY'] = token_hex()
+app.config['SECRET_KEY'] = token_hex(16)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -205,7 +205,7 @@ def login():
             if user is None:
                 flash('ユーザー名が見つけられません')
             else:
-                if checkpw(bytes(password.encode('utf-8')), user.hashed_pw):
+                if checkpw(bytes(password.encode('utf-8')), bytes(user.hashed_pw)):
                     login_user(user, remember=True)
                     session['username'] = username
                     session['icon'] = user.icon
@@ -259,4 +259,5 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True)
+    app.debug = True
+    app.run()
